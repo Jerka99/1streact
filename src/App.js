@@ -1,25 +1,41 @@
-import logo from './logo.svg';
 import './App.css';
+import { Link, Route, Routes } from 'react-router-dom';
+import Home from "./pages/Home";
+import Weather from "./pages/Weather"
+import { useState } from 'react';
+import Bars from "./comps/bars.js"
+import Logo from "./pictures/logo.png"
 
 function App() {
+console.log("APPPPPP")
+ const [isActive, setActive] = useState(false)
+
+ const toggleClass = () =>{
+  setActive(!isActive);
+ }
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <div id='main-body'>  
+    <header> 
+      <image src={Logo}></image>
+    <div id='bar' onClick={toggleClass}><Bars stt0 = {isActive}/></div>
+    </header> 
+    <div id='leftBar' className={isActive ? "active" : null }>
+  <nav id='barsNav'>
+    <li>
+      <Link onClick={toggleClass}  to="/">Home</Link>
+      </li>
+      <li>
+      <Link onClick={toggleClass} to="/weather">Weather</Link>
+      </li>
+  </nav>
+  </div>
+  <Routes>
+    <Route path="/" element = {<Home stt = {isActive} />}/>
+    <Route path="/weather" element = {<Weather stt = {isActive} />}/>
+  </Routes>
+  </div>
   );
+
 }
 
 export default App;
