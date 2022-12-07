@@ -1,11 +1,12 @@
 import {useEffect, useState} from "react";
-// import {fun} from "./fun.js";
+import RangeReturn from "./RangeReturn.js";
+
 let FiveDaysWeather = (props) => {
     console.log("brojpozivaaaaaaa")
     const [weather, setWeather] = useState([]);
-    const [newclass, toggle] = useState(0);
+    const [displayBlock, toggle] = useState(0);
     const [buttonDay, SetbuttonDay] = useState([]);
-    const [x,setX] = useState("00")
+    const [x, setX] = useState("")
     
     let apiFunction = (prop) => { 
     fetch("https://api.openweathermap.org/data/2.5/forecast?q=" + prop + 
@@ -13,14 +14,14 @@ let FiveDaysWeather = (props) => {
     .then(response=>response.json())
     .then((data) =>{console.log("data",data); storingFunction(data)
                     
-    }).catch(error=>{alert("invalid name");
-    })
+    }).catch(console.error());
+    
 }
 useEffect(()=>{
     console.log("useeffect",props)
     apiFunction(props.city)
     SetbuttonDay([])
-                },[props]
+    },[props]
     )
 let temp ;
 let getMyDate = (i) =>{
@@ -58,73 +59,59 @@ let storingFunction = (weatherData) => {
     i=i+1
 }}
 
-
-   let blocksFunction = (days) =>{
-    return days.map((day, index)=>{
-
-        console.log("day",day.dt_txt.substring(11,13));
-
-   if(`${day.dt_txt.substring(11,13)}` == x){ return (<div className="block3h" key={index}>
-    <div>{`${day.dt_txt.substring(11,13)}h - ${parseInt(day.dt_txt.substring(11,13))+3}h`}</div>
-    <img  src={`http://openweathermap.org/img/wn/${day.weather[0].icon}@2x.png`}></img>
-    <h6>{day.weather[0].main}</h6>
-    <h6>temperature: {(day.main.temp-273.15).toFixed(1)}</h6>
-    <h6>Wind: {day.wind.speed}</h6>
-</div>)}
-})}
-    
+   
 
     const fun = (e, d) =>{
         let input = e.target.value;
-        
         let num = 100/(d.length);
+        
 
         if(input >= 0 && input < num){
             setX(d[0].dt_txt.substring(11,13));
         }
-        if(input > num && input < num*2){
+        else if(input > num && input < num*2){
             setX(d[1].dt_txt.substring(11,13));
         }
-        if(input > num*2 && input < num*3){
+        else if(input > num*2 && input < num*3){
             setX(d[2].dt_txt.substring(11,13));
         }
-        if(input > num*3 && input < num*4){
+        else if(input > num*3 && input < num*4){
             setX(d[3].dt_txt.substring(11,13));
         }
-        if(input > num*4 && input < num*5){
+        else if(input > num*4 && input < num*5){
             setX(d[4].dt_txt.substring(11,13));
         }
-        if(input > num*5 && input < num*6){
+        else if(input > num*5 && input < num*6){
             setX(d[5].dt_txt.substring(11,13));
         }
-        if(input > num*6 && input < num*7){
+        else if(input > num*6 && input < num*7){
             setX(d[6].dt_txt.substring(11,13));
         }
-        if(input > num*7 && input < num*8){
+        else if(input > num*7 && input < num*8){
             setX(d[7].dt_txt.substring(11,13));
         }
             }
-            const check = () =>{
-                setX(weather[0][0].dt_txt.substring(11,13))
-            }
+
 return(
 <>
     <div id="dayButtons">
-    <div onClick={(e)=>{toggle(0); check()}}>{buttonDay[0]}</div>
-    <div onClick={(e)=>{toggle(1); setX(0)}}>{buttonDay[1]}</div>
-    <div onClick={(e)=>{toggle(2); setX(0)}}>{buttonDay[2]}</div>
-    <div onClick={(e)=>{toggle(3); setX(0)}}>{buttonDay[3]}</div>
-    <div onClick={(e)=>{toggle(4); setX(0)}}>{buttonDay[4]}</div>
-    <div onClick={(e)=>{toggle(5); setX(0)}}>{buttonDay[5]}</div>
+    { weather[0]?.length !==0 ? (
+    <div onClick={(e)=>{toggle(0); setX(weather[0][0]?.dt_txt.substring(11,13)) }}>
+                                             {buttonDay[0] ?? "Loading..."}</div>) : null}
+    <div onClick={(e)=>{toggle(1); setX(0)}}>{buttonDay[1] ?? "Loading..."}</div>
+    <div onClick={(e)=>{toggle(2); setX(0)}}>{buttonDay[2] ?? "Loading..."}</div>
+    <div onClick={(e)=>{toggle(3); setX(0)}}>{buttonDay[3] ?? "Loading..."}</div>
+    <div onClick={(e)=>{toggle(4); setX(0)}}>{buttonDay[4] ?? "Loading..."}</div>
+    <div onClick={(e)=>{toggle(5); setX(0)}}>{buttonDay[5] ?? "Loading..."}</div>
     </div>
     
     <div id="holderChild">
     {weather.map((days, index)=>{console.log("werd",days)
 
-           if(index == newclass  && days.length !== 0){return (<div className={`flexDays ${index}`} key={index} >
-           {/* <div  >{`${days[0].dt_txt.substring(8,10)}.${days[0].dt_txt.substring(5,7)}.`}</div> */}
-           <>{blocksFunction(days)}</>
-           <input id="input" type="range" onInput={(e)=>fun(e, days)}  ></input>
+           if(index === displayBlock && days.length !== 0){return (<div className={`flexDays ${index}`} key={index} >
+           <div id="date_n_day" >{`${days[0]?.dt_txt.substring(8,10)}.${days[0]?.dt_txt.substring(5,7)}. ${buttonDay[index]?? "Loading..."} `}</div>
+           <RangeReturn days={days} x={x}/>{console.log("x",x)}
+           <input id="input" type="range" defaultValue={0} onInput={(e)=>fun(e, days)} ></input>
            </div>)}
 
         })}
