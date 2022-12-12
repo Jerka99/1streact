@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useRef } from "react";
 import FiveDaysWeather from "../FiveDaysWeather.js";
 import Clouds from "./../pictures/clouds.jpg";
 import Mist from "./../pictures/mist.jpg";
