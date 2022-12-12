@@ -44,8 +44,8 @@ function Weather(props){
 
           const caller = () =>{
             if(check?.current !== city){
-            fetchWeather()
-            changeChange(<FiveDaysWeather city={city}/>)}}
+            fetchWeather()}
+            changeChange(<FiveDaysWeather city={city}/>)}
           
         
 
