@@ -58,16 +58,15 @@ let storingFunction = (weatherData) => {
 }
 console.timeEnd("for")}
 
-   
-if(weather[0]?.length > 0)
+if(weather[5]?.length > 5){
 return(
 <>
-    <RangeReturn2 weather={weather} buttonDay={buttonDay} x={0}/>
-</>)
+    <RangeReturn2 weather={weather} buttonDay={buttonDay} x={1}/>
+</>)}
 else{
     return(
         <>
-            <RangeReturn2 weather={weather} buttonDay={buttonDay} x={1} />
+            <RangeReturn2 weather={weather} buttonDay={buttonDay} x={0} />
         </>)
 }
 } 
