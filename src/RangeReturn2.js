@@ -5,7 +5,7 @@ export default function RangeReturn2 (prop){
 
     const weather = prop.weather;
     const buttonDay = prop.buttonDay;
-    const [displayBlock, toggle] = useState(0);
+    const [displayBlock, toggle] = useState(prop.x);
 
             
 
@@ -23,11 +23,11 @@ export default function RangeReturn2 (prop){
 
     <div id="holderChild">
     {weather.map((days, index)=>{
-
-           if(index === displayBlock && days.length !== 0){return (<div className={`flexDays ${index}`} key={index} >
+        
+           if(index === displayBlock && days.length !== 0){
+            return (<div className={`flexDays ${index}`} key={index} >
            <div id="date_n_day" >{`${days[0]?.dt_txt.substring(8,10)}.${days[0]?.dt_txt.substring(5,7)}. ${buttonDay[index]?? "Loading..."} `}</div>
            <RangeReturn1 days={days} />
-           {/* <input id="input" type="range" defaultValue={0} onInput={(e)=>fun(e, days)} ></input> */}
            </div>)}
 
         })}

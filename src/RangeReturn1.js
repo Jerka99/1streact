@@ -3,7 +3,7 @@ import { useState } from "react";
 export default function RangeReturn1(props){
 
     const [x, setX] = useState(props.days[0].dt_txt.substring(11,13))
-
+    let days = props.days;
     const fun = (e, d) =>{
         let input = e.target.value;
         let num = 100/(d.length);
@@ -36,7 +36,7 @@ export default function RangeReturn1(props){
             }
 
     return <>
-    {props.days.map((day, index)=>{
+    {days.map((day, index)=>{
 
         console.log("day",day.dt_txt.substring(11,13) == x);
 
@@ -49,7 +49,7 @@ export default function RangeReturn1(props){
     <h6>Wind: {day.wind.speed}</h6>
 </div>)}
 })}
-    <input id="input" type="range" defaultValue={0} onInput={(e)=>fun(e, props.days)} ></input>
+    <input id="input" type="range" defaultValue={0} onInput={(e)=>fun(e, days)} ></input>
 
 </>
 }
