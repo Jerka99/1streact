@@ -11,16 +11,12 @@ export default function RangeReturn2 (prop){
 
     return <> 
     <div id="dayButtons">
-    { weather[0]?.length !==0 ? (
-    <div onClick={(e)=>{toggle(0); }}>
-                                             {buttonDay[0] ?? "Loading..."}</div>) : null}
+    <div onClick={(e)=>{toggle(0); }}>{buttonDay[0] ?? "Loading..."}</div>
     <div onClick={(e)=>{toggle(1); }}>{buttonDay[1] ?? "Loading..."}</div>
     <div onClick={(e)=>{toggle(2); }}>{buttonDay[2] ?? "Loading..."}</div>
     <div onClick={(e)=>{toggle(3); }}>{buttonDay[3] ?? "Loading..."}</div>
     <div onClick={(e)=>{toggle(4); }}>{buttonDay[4] ?? "Loading..."}</div>
-    { weather[5]?.length !==0 ? (
-    <div onClick={(e)=>{toggle(5); }}>
-                                             {buttonDay[5] ?? "Loading..."}</div>) : null}
+    <div onClick={(e)=>{toggle(5); }}>{buttonDay[5] ?? "Loading..."}</div>
     </div>
 
     <div id="holderChild">

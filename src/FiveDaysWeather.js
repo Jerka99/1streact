@@ -54,10 +54,11 @@ let storingFunction = (weatherData) => {
         const allDays = (weatherData.list.filter(element => {
        return element.dt_txt.substring(0,10)===everyDay;
     }))
-    setWeather(sumOfAll =>([...sumOfAll, allDays]))
+    if(weather[0]?.length !== 0 && weather[5]?.length !==0){
+    setWeather(sumOfAll =>([...sumOfAll, allDays]))}
 }
 console.timeEnd("for")}
-
+console.log("weather",weather)
 if(weather[5]?.length > 5){
 return(
 <>
