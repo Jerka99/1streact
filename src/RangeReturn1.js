@@ -40,9 +40,8 @@ export default function RangeReturn1(props){
 
         console.log("day",day.dt_txt.substring(11,13) == x);
 
-
    if(`${day.dt_txt.substring(11,13)}` == x){ return (<div className="block3h" key={index}>
-    <div>{`${day.dt_txt.substring(11,13)}h - ${parseInt(day.dt_txt.substring(11,13))+3}h`}</div>
+    <div>{`${day.dt_txt.substring(11,13)}h - ${("0"+(parseInt(day.dt_txt.substring(11,13))+3)).substr(-2)}h`}</div>
     <img  src={`http://openweathermap.org/img/wn/${day.weather[0].icon}@2x.png`}></img>
     <h6>{day.weather[0].main}</h6>
     <h6>temperature: {(day.main.temp-273.15).toFixed(1)}</h6>

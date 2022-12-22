@@ -1,22 +1,29 @@
 import RangeReturn1 from "./RangeReturn1";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function RangeReturn2 (prop){
-
+   console.log("rangereturn2")
     const weather = prop.weather;
     const buttonDay = prop.buttonDay;
     const [displayBlock, toggle] = useState(prop.x);
 
-            
+    useEffect(()=>{
+      toggle(prop.x)
+      },[prop.x]
+      )
 
     return <> 
     <div id="dayButtons">
-    <div onClick={(e)=>{toggle(0); }}>{buttonDay[0] ?? "Loading..."}</div>
+    { weather[0]?.length !==0 ? (
+    <div onClick={(e)=>{toggle(0); }}>
+                                             {buttonDay[0] ?? "Loading..."}</div>) : null}
     <div onClick={(e)=>{toggle(1); }}>{buttonDay[1] ?? "Loading..."}</div>
     <div onClick={(e)=>{toggle(2); }}>{buttonDay[2] ?? "Loading..."}</div>
     <div onClick={(e)=>{toggle(3); }}>{buttonDay[3] ?? "Loading..."}</div>
     <div onClick={(e)=>{toggle(4); }}>{buttonDay[4] ?? "Loading..."}</div>
-    <div onClick={(e)=>{toggle(5); }}>{buttonDay[5] ?? "Loading..."}</div>
+    { weather[5]?.length !==0 ? (
+    <div onClick={(e)=>{toggle(5); }}>
+                                             {buttonDay[5] ?? "Loading..."}</div>) : null}
     </div>
 
     <div id="holderChild">

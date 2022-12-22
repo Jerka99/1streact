@@ -21,6 +21,7 @@ useEffect(()=>{
     SetbuttonDay([])
     },[props]
     )
+    
 let temp ;
 let getMyDate = (i) =>{
     let date = new Date;
@@ -54,11 +55,10 @@ let storingFunction = (weatherData) => {
         const allDays = (weatherData.list.filter(element => {
        return element.dt_txt.substring(0,10)===everyDay;
     }))
-    if(weather[0]?.length !== 0 && weather[5]?.length !==0){
-    setWeather(sumOfAll =>([...sumOfAll, allDays]))}
+    setWeather(sumOfAll =>([...sumOfAll, allDays]))
 }
 console.timeEnd("for")}
-console.log("weather",weather)
+
 if(weather[5]?.length > 5){
 return(
 <>
