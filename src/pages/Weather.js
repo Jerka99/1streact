@@ -21,7 +21,6 @@ function Weather(props){
     const check = useRef("");
     const clicked = useRef(false);
     const [favorite, setFavorite] = useState({});
-    const [show, showFavorites] = useState(false);
 
     let fetchWeather = () => { 
             fetch("https://api.openweathermap.org/data/2.5/weather?q=" + city + 
@@ -100,8 +99,7 @@ return(<>
     
     </div>
 
-    <Favorite favorite={favorite} show = {show}/>
-    <div id="favbutton" onClick={(e)=>showFavorites(!show)}><div>Favorites</div><div>{Object.keys(favorite).length}</div></div>  
+    <Favorite favorite = {favorite}/>
 
     {  check.current == city && city !== "" && clicked.current ?  (
     <div id="daysHolder">

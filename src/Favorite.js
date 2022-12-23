@@ -1,9 +1,13 @@
-
+import { useState } from "react";
 let Favorite = (props) => {
-console.log("favoriteeeeeeeeeeeeeeee",props.favorite)
+  const [show, showFavorites] = useState(false);
+  const favorite = props.favorite
+console.log("favoriteeeeeeeeeeeeeeee",favorite)
 
-    return <div id={`favoriteBoxHolder${props.show ? "1" : ""}`}>
-    <div id="favoriteBox"></div>
+    return <div id="favoriteBoxHolder">
+      <div id="favbutton" onClick={(e)=>showFavorites(!show)}><div>Favorites</div><div>{Object.keys(favorite).length}</div></div>  
+
+    <div id="favoriteBox" className={`${show ? "" : "Remove"}`}></div>
   </div>
 }
 export default Favorite;

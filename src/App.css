@@ -247,20 +247,14 @@ margin-top: 75px!important;
 }
 
 
-#favoriteBoxHolder1 {
+#favoriteBoxHolder {
   position: absolute;
   top: 90px;
   left: 0;
   right: 0;
   margin: auto;
-  width: 370px;
+  width: 345px;
   height: 404px;
-  z-index: 2;
-}
-
-#favoriteBoxHolder {
-  height: 0;
-  opacity: 0;
 }
 
 #favoriteBox {
@@ -270,8 +264,16 @@ margin-top: 75px!important;
   border-radius: 10px;
   border: solid 1px black;
   height: inherit;
+  top: 40px;
   right: 0;
-  z-index: 0;
+  z-index: 1;
+  transition: all 0.4s ease-in-out;
+}
+
+#favoriteBox.Remove {
+  visibility: hidden;
+  opacity: 0;
+  height: 0px;
 }
 
 #favbutton {
@@ -279,8 +281,8 @@ margin-top: 75px!important;
   background-color: rgba(200,200,200,0.7);
   width: 110px;
   height: 38px;
-  right: 235px;
-  top: 50px;
+  right: 0;
+  top: 0;
   border-radius: 10px;
   display: flex;
   align-items: center;
