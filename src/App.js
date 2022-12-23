@@ -16,7 +16,7 @@ console.log("APPPPPP")
   return (
     <div id='main-body'>  
     <header> 
-      <image src={Logo}></image>
+      <div style={{backgroundImage:`url(${Logo})`}}></div>
     <div id='bar' onClick={toggleClass}><Bars stt0 = {isActive}/></div>
     </header> 
     <div id='leftBar' className={isActive ? "active" : null }>

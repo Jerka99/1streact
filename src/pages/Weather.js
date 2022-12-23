@@ -7,6 +7,7 @@ import Clear from "./../pictures/clear.jpg";
 import Rain from "./../pictures/rain.jpg";
 import Thunderstorm from "./../pictures/thunderstorm.jpg";
 import Difweather from "./../pictures/difweather.jpg";
+import { useLinkClickHandler } from "react-router-dom";
 
 
 function Weather(props){
@@ -14,9 +15,9 @@ function Weather(props){
     
     const [weather, setCityWeather] = useState({});
     const [city, setCity] = useState("")
-    const [change, changeChange] = useState("")
+    const [FiveDays, displayFiveDays] = useState("")
     const check = useRef("")
-
+    const clicked = useRef(false)
 
     let fetchWeather = () => { 
             fetch("https://api.openweathermap.org/data/2.5/weather?q=" + city + 
@@ -31,24 +32,26 @@ function Weather(props){
                 temp : data.main.temp,
                 humidity : data.main.humidity,
                 speed : data.wind.speed
-            });
-            check.current = city;}).catch(error => {
+            });            check.current = city;
+                           clicked.current = true;
+            }).catch(error => {
               console.error(error)
             });          
         
         }
+        console.log("city",city)
+        console.log("check.current",check.current)
 
         const handleSubmit = (event) => {
             event.preventDefault();
           }        
 
           const caller = () =>{
-            if(check?.current !== city){
-            fetchWeather()}
-            changeChange(<FiveDaysWeather city={city}/>)}
-          
+            clicked.current = false;
+            fetchWeather();         
+            displayFiveDays(<FiveDaysWeather city={city}/>)
+          }
         
-
 return(<>  
     <div id="weatherbody" style={
     weather.main === "Clear" ? {backgroundImage: `url(${Clear})`} :
@@ -63,17 +66,17 @@ return(<>
      <input id="weatherinput" /*ref={city} */ value={city} onChange={(e)=>setCity(e.target.value)}></input> 
      <button id="weatherbutton" onClick={(e)=>{caller()}}>Search</button>
     </form>
-    {city == "" ? (<h1>Type city</h1>) : check.current == city ? (<><h1>Todays weather in {weather.name}</h1>
+    {city == "" ? (<h1>Type city</h1>) : check.current == city && clicked.current == true ? (<><h1>Todays weather in {weather.name}</h1>
     <img id="weatherimg" src={`http://openweathermap.org/img/wn/${weather.icon}@2x.png`}></img>
     <h3>{weather.description}</h3>
     <h3>Temperature {(weather.temp-273.15).toFixed(1)} <span>&#176;</span>C</h3>
     <h3>Humidity {weather.humidity}</h3>
     <h3>Wind {weather.speed} km/h</h3></>) :  (<h1>Todays weather in {city}</h1>)}
     </div>
-    {check.current !== city ? null : (
+    {  check.current == city && city !== "" && clicked.current ?  (
     <div id="daysHolder">
-      {change}   
-    </div>)}
+      {FiveDays}   
+    </div>) : null }
     </div>
     </div>
     
