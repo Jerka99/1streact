@@ -1,5 +1,6 @@
 import { useState, useRef } from "react";
 import FiveDaysWeather from "../FiveDaysWeather.js";
+import  Favorite from '../Favorite.js'
 import Clouds from "./../pictures/clouds.jpg";
 import Mist from "./../pictures/mist.jpg";
 import Snow from "./../pictures/snow.jpg";
@@ -7,17 +8,20 @@ import Clear from "./../pictures/clear.jpg";
 import Rain from "./../pictures/rain.jpg";
 import Thunderstorm from "./../pictures/thunderstorm.jpg";
 import Difweather from "./../pictures/difweather.jpg";
-import { useLinkClickHandler } from "react-router-dom";
+import { FaRegStar,FaStar } from 'react-icons/fa';
+
 
 
 function Weather(props){
     console.log("weather")
     
     const [weather, setCityWeather] = useState({});
-    const [city, setCity] = useState("")
-    const [FiveDays, displayFiveDays] = useState("")
-    const check = useRef("")
-    const clicked = useRef(false)
+    const [city, setCity] = useState("");
+    const [FiveDays, displayFiveDays] = useState("");
+    const check = useRef("");
+    const clicked = useRef(false);
+    const [favorite, setFavorite] = useState({});
+    const [show, showFavorites] = useState(false);
 
     let fetchWeather = () => { 
             fetch("https://api.openweathermap.org/data/2.5/weather?q=" + city + 
@@ -34,13 +38,11 @@ function Weather(props){
                 speed : data.wind.speed
             });            check.current = city;
                            clicked.current = true;
-            }).catch(error => {
+            }).catch(error => {clicked.current = false;
               console.error(error)
             });          
         
         }
-        console.log("city",city)
-        console.log("check.current",check.current)
 
         const handleSubmit = (event) => {
             event.preventDefault();
@@ -51,8 +53,29 @@ function Weather(props){
             fetchWeather();         
             displayFiveDays(<FiveDaysWeather city={city}/>)
           }
+
+          const addFavorites = () =>{
+            console.log("clicked.current",clicked.current)
+            const keys = Object.keys(favorite);
+            let checker = false;
+            keys.forEach(key => {
+              if(favorite[key] == city){
+                checker = true;
+              }});
+              
+            if(clicked.current && !checker){//checker == false
+            setFavorite(sumOfFavorites =>({...sumOfFavorites, [city]:city}))}
+          
+          else if(clicked.current && checker){
+            setFavorite(sumOfFavorites =>{
+              const copy ={...sumOfFavorites};
+              delete copy[city];
+              return copy;
+              })
+          }}
+          console.log("favorite",favorite)
         
-return(<>  
+return(<>
     <div id="weatherbody" style={
     weather.main === "Clear" ? {backgroundImage: `url(${Clear})`} :
     weather.main === "Clouds" ? {backgroundImage: `url(${Clouds})`} :
@@ -62,6 +85,8 @@ return(<>
     weather.main === "Snow" ? {backgroundImage: `url(${Snow})`} : {backgroundImage: `url(${Difweather})`}} >
     <div id="flexiblebody" className={props.stt ? "active" : null }>
     <div id="weather-box">  
+    {favorite[city] == check.current ? <FaStar id="yellowstar"  onClick={addFavorites}></FaStar> :
+       <FaRegStar id="star"  onClick={addFavorites}></FaRegStar>}
     <form onSubmit={handleSubmit}>
      <input id="weatherinput" /*ref={city} */ value={city} onChange={(e)=>setCity(e.target.value)}></input> 
      <button id="weatherbutton" onClick={(e)=>{caller()}}>Search</button>
@@ -72,12 +97,18 @@ return(<>
     <h3>Temperature {(weather.temp-273.15).toFixed(1)} <span>&#176;</span>C</h3>
     <h3>Humidity {weather.humidity}</h3>
     <h3>Wind {weather.speed} km/h</h3></>) :  (<h1>Todays weather in {city}</h1>)}
+    
     </div>
+
+    <Favorite favorite={favorite} show = {show}/>
+    <div id="favbutton" onClick={(e)=>showFavorites(!show)}><div>Favorites</div><div>{Object.keys(favorite).length}</div></div>  
+
     {  check.current == city && city !== "" && clicked.current ?  (
     <div id="daysHolder">
       {FiveDays}   
     </div>) : null }
     </div>
+
     </div>
     
     </>
