@@ -132,6 +132,16 @@ margin-left: 200px;
   z-index: 1;
 }
 
+#weather-box ,form{
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
+}
+
 #weatherinput {
   border: none;
   border-bottom: solid 1px black;
@@ -158,6 +168,7 @@ margin-top: 75px!important;
 #weatherbutton {
   top: 0;
   position: relative;
+  cursor: pointer;
 }
 
 #weather-box h3{
@@ -236,6 +247,7 @@ margin-top: 75px!important;
   right: 20px;
   width: 20px;
   height: 20px;
+  cursor: pointer;
 }
 
 #star{
@@ -244,6 +256,7 @@ margin-top: 75px!important;
   right: 20px;
   width: 20px;
   height: 20px;
+  cursor: pointer;
 }
 
 
@@ -263,17 +276,36 @@ margin-top: 75px!important;
   width: 200px;
   border-radius: 10px;
   border: solid 1px black;
-  height: inherit;
+  height: 288px;
   top: 40px;
   right: 0;
   z-index: 1;
   transition: all 0.4s ease-in-out;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
+
 
 #favoriteBox.Remove {
   visibility: hidden;
   opacity: 0;
   height: 0px;
+  width: 0px;
+}
+
+#favoriteBox div {
+  border-bottom: solid 1px black;
+  width: 99%;
+  height: 35px;
+  cursor: pointer;
+}
+
+#favoriteBox div h6{
+  margin: 8px 8px 8px 17px;
+  font-size: 17px;
 }
 
 #favbutton {
@@ -291,4 +323,6 @@ margin-top: 75px!important;
   border: solid 1px black;
   cursor: pointer;
 }
+
+
 

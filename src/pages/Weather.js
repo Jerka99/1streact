@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useCallback } from "react";
 import FiveDaysWeather from "../FiveDaysWeather.js";
 import  Favorite from '../Favorite.js'
 import Clouds from "./../pictures/clouds.jpg";
@@ -63,12 +63,12 @@ function Weather(props){
               }});
               
             if(clicked.current && !checker){//checker == false
-            setFavorite(sumOfFavorites =>({...sumOfFavorites, [city]:city}))}
+            setFavorite(sumOfFavorites =>({...sumOfFavorites, [check.current]:check.current}))}
           
           else if(clicked.current && checker){
             setFavorite(sumOfFavorites =>{
               const copy ={...sumOfFavorites};
-              delete copy[city];
+              delete copy[check.current];
               return copy;
               })
           }}
@@ -99,7 +99,7 @@ return(<>
     
     </div>
 
-    <Favorite favorite = {favorite}/>
+    <Favorite favorite = {favorite} setCity={setCity}/>
 
     {  check.current == city && city !== "" && clicked.current ?  (
     <div id="daysHolder">
