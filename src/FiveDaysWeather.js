@@ -59,7 +59,7 @@ let storingFunction = (weatherData) => {
 }
 console.timeEnd("for")}
 
-if(weather[5]?.length > 5){
+if(weather[5]?.length > 7){
 return(
 <>
     <RangeReturn2 weather={weather} buttonDay={buttonDay} x={1}/>
@@ -72,4 +72,4 @@ else{
 }
 } 
 
-export default memo(FiveDaysWeather);
+export default FiveDaysWeather;

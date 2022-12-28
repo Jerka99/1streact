@@ -1,4 +1,4 @@
-import { useState, useRef, useCallback } from "react";
+import { useState, useRef, useEffect, useCallback, useMemo } from "react";
 import FiveDaysWeather from "../FiveDaysWeather.js";
 import  Favorite from '../Favorite.js'
 import Clouds from "./../pictures/clouds.jpg";
@@ -17,12 +17,10 @@ function Weather(props){
     
     const [weather, setCityWeather] = useState({});
     const [city, setCity] = useState("");
-    const [FiveDays, displayFiveDays] = useState("");
     const check = useRef("");
-    const clicked = useRef(false);
     const [favorite, setFavorite] = useState({});
 
-    let fetchWeather = () => { 
+    let fetchWeather = (city) => { 
             fetch("https://api.openweathermap.org/data/2.5/weather?q=" + city + 
             "&appid=ff146a8b4c46b05b8bce4aa16d2a8c35")
             .then((response)=>response.json())
@@ -35,26 +33,27 @@ function Weather(props){
                 temp : data.main.temp,
                 humidity : data.main.humidity,
                 speed : data.wind.speed
-            });            check.current = city;
-                           clicked.current = true;
-            }).catch(error => {clicked.current = false;
+            });    console.log(city);        check.current = city;
+            }).catch(error => {check.current = false;
               console.error(error)
             });          
-        
+            
         }
-
+      
         const handleSubmit = (event) => {
             event.preventDefault();
           }        
 
-          const caller = () =>{
-            clicked.current = false;
-            fetchWeather();         
-            displayFiveDays(<FiveDaysWeather city={city}/>)
-          }
+          const caller = useCallback((x) =>{
+            fetchWeather(x);         
+          },[city])
+
+
+          
+          const fiveDaysFun = useMemo(() =>{return<FiveDaysWeather city={city}/>}
+          ,[city])
 
           const addFavorites = () =>{
-            console.log("clicked.current",clicked.current)
             const keys = Object.keys(favorite);
             let checker = false;
             keys.forEach(key => {
@@ -62,17 +61,18 @@ function Weather(props){
                 checker = true;
               }});
               
-            if(clicked.current && !checker){//checker == false
+            if(check.current && !checker){//checker == false
             setFavorite(sumOfFavorites =>({...sumOfFavorites, [check.current]:check.current}))}
           
-          else if(clicked.current && checker){
+          else if(check.current && checker){
             setFavorite(sumOfFavorites =>{
               const copy ={...sumOfFavorites};
               delete copy[check.current];
               return copy;
               })
           }}
-          console.log("favorite",favorite)
+
+
         
 return(<>
     <div id="weatherbody" style={
@@ -88,9 +88,9 @@ return(<>
        <FaRegStar id="star"  onClick={addFavorites}></FaRegStar>}
     <form onSubmit={handleSubmit}>
      <input id="weatherinput" /*ref={city} */ value={city} onChange={(e)=>setCity(e.target.value)}></input> 
-     <button id="weatherbutton" onClick={(e)=>{caller()}}>Search</button>
+     <button id="weatherbutton" onClick={(e)=>{caller(city);console.log("city",city)}}>Search</button>
     </form>
-    {city == "" ? (<h1>Type city</h1>) : check.current == city && clicked.current == true ? (<><h1>Todays weather in {weather.name}</h1>
+    {city == "" ? (<h1>Type city</h1>) : check.current == city && !check.current == false ? (<><h1>Todays weather in {weather.name}</h1>
     <img id="weatherimg" src={`http://openweathermap.org/img/wn/${weather.icon}@2x.png`}></img>
     <h3>{weather.description}</h3>
     <h3>Temperature {(weather.temp-273.15).toFixed(1)} <span>&#176;</span>C</h3>
@@ -99,11 +99,11 @@ return(<>
     
     </div>
 
-    <Favorite favorite = {favorite} setCity={setCity}/>
+    <Favorite favorite = {favorite} setCity = {setCity} caller = {caller}/>
 
-    {  check.current == city && city !== "" && clicked.current ?  (
+    {  check.current == city && city !== "" && check.current ?  (
     <div id="daysHolder">
-      {FiveDays}   
+      {fiveDaysFun}   
     </div>) : null }
     </div>
 
