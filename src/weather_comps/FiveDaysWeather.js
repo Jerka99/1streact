@@ -1,5 +1,5 @@
 import {memo, useEffect, useState} from "react";
-import RangeReturn2 from "./RangeReturn2.js";
+import RangeReturn2 from "../weather_comps/RangeReturn2.js";
 
 let FiveDaysWeather = (props) => {
     console.log("FiveDaysWeather")
@@ -16,11 +16,9 @@ let FiveDaysWeather = (props) => {
     
 }
 useEffect(()=>{
-    console.log("useeffect",props)
     apiFunction(props.city)
     SetbuttonDay([])
-    },[props]
-    )
+    },[props])
     
 let temp ;
 let getMyDate = (i) =>{
@@ -42,7 +40,7 @@ let getMyDate = (i) =>{
     let yearEpoch = date.setFullYear(date.getFullYear());
     let year = new Date(yearEpoch).toString().substring(11,15);
     
-    console.log("date", `${year}-${month}-${day}`);
+    // console.log("date", `${year}-${month}-${day}`);
     return `${year}-${month}-${day}`;
 }
 

@@ -1,4 +1,4 @@
-import RangeReturn1 from "./RangeReturn1";
+import RangeReturn1 from "../weather_comps/RangeReturn1";
 import { useState, useEffect } from "react";
 
 export default function RangeReturn2 (prop){
