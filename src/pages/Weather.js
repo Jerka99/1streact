@@ -10,7 +10,7 @@ import Rain from "./../pictures/rain.jpg";
 import Thunderstorm from "./../pictures/thunderstorm.jpg";
 import Difweather from "./../pictures/difweather.jpg";
 
-const cityFromLocalStorage = JSON.parse(localStorage.getItem("city") || "")
+const cityFromLocalStorage = JSON.parse(localStorage.getItem("city")) || "";
 
 function Weather(props){
     console.log("weather")

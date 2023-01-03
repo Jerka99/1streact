@@ -1,7 +1,7 @@
 import { useState, memo, useEffect } from "react";
 import { FaRegStar,FaStar } from 'react-icons/fa';
 
-const favoritesFromLocalStorage = JSON.parse(localStorage.getItem("favs") || {})
+const favoritesFromLocalStorage = JSON.parse(localStorage.getItem("favs")) || "{}";
 
 let Favorite = (props) => {
   const [show, showFavorites] = useState(false);
